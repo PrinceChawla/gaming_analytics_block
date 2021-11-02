@@ -1,6 +1,6 @@
 ## What table houses your events?
 constant: events_table {
-  value: "`se-pbl.gaming_demo_dev.raw_events`"
+  value: "`mlconsole-poc.gaming_demo_dev.raw_events`"
 }
 ## When did the event occour?
 constant: timestamp_field {

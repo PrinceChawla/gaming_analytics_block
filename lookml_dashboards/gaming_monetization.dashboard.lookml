@@ -637,10 +637,10 @@
     name: Revenue per Ad Shown
     model: gaming
     explore: events
-    type: looker_map
+    type: looker_pie
     fields: [events.country, events.number_of_ads_shown, events.total_ad_revenue]
     filters:
-      events.number_of_ads_shown: ">1000"
+      events.number_of_ads_shown: ">=0"
     sorts: [revenue_per_ad_shown desc]
     limit: 500
     column_limit: 50
@@ -695,7 +695,7 @@
     type: single_value
     fields: [events.number_of_ads_shown, events.total_ad_revenue]
     filters:
-      events.number_of_ads_shown: ">1000"
+      events.number_of_ads_shown: ">=0"
     limit: 500
     column_limit: 50
     dynamic_fields: [{table_calculation: revenue_per_ad_shown, label: Revenue per
@@ -751,7 +751,7 @@
     type: single_value
     fields: [events.number_of_ads_shown, sessions.number_of_sessions]
     filters:
-      events.number_of_ads_shown: ">1000"
+      events.number_of_ads_shown: ">=0"
     limit: 500
     column_limit: 50
     dynamic_fields: [{table_calculation: ads_per_session, label: Ads per Session,
@@ -815,7 +815,7 @@
     type: table
     fields: [events.number_of_ads_shown, events.total_ad_revenue, events.install_source]
     filters:
-      events.number_of_ads_shown: ">1000"
+      events.number_of_ads_shown: ">=0"
     sorts: [revenue_per_ad_shown desc]
     limit: 500
     column_limit: 50

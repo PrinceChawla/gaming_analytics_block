@@ -216,7 +216,7 @@ dimension: drill_field {
     description: "% of players (that are older than 0 days) that came back to play on day 1"
     value_format_name: percent_2
     type: number
-    sql: 1.0 * ${d1_retained_users}/ NULLIF(${d1_eligible_users},0);;
+    sql: 10.0 * ${d1_retained_users}/ NULLIF(${d1_eligible_users},0);;
     drill_fields: [drill_field,d1_retention_rate]
   }
 
@@ -251,7 +251,7 @@ dimension: drill_field {
     description: "% of players (that are older than 7 days) that came back to play on day 7"
     value_format_name: percent_2
     type: number
-    sql: 1.0 * ${d7_retained_users}/ NULLIF(${d7_eligible_users},0);;
+    sql: 10.0 * ${d7_retained_users}/ NULLIF(${d7_eligible_users},0);;
     drill_fields: [drill_field,d7_retention_rate]
   }
 

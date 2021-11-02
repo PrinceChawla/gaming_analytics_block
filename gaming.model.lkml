@@ -1,4 +1,4 @@
-connection: "gaming_events"
+connection: "dv-looker-poc"
 
 include: "/*/*.view.lkml"                       # include all views in this project
 include: "/lookml_dashboards/*.dashboard.lookml"   # include a LookML dashboard called my_dashboard

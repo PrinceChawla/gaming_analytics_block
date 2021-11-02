@@ -72,6 +72,7 @@
     type: single_value
     fields: [events.number_of_users, events.event_date]
     fill_fields: [events.event_date]
+    sorts: [events.number_of_users desc]
     filters: {}
     limit: 500
     column_limit: 50
@@ -1085,7 +1086,7 @@
     fields: [events.event_date, events.number_of_new_users]
     fill_fields: [events.event_date]
     filters: {}
-    sorts: [events.event_date desc]
+    sorts: [events.number_of_users desc]
     limit: 500
     column_limit: 50
     dynamic_fields: [{table_calculation: daily_installs, label: Daily Installs, expression: 'mean(${events.number_of_new_users})',
