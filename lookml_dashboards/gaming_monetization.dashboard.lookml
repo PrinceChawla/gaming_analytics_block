@@ -936,7 +936,7 @@
   - name: Game
     title: Game
     type: field_filter
-    default_value: Lookerwood Farm
+    default_value: ''
     allow_multiple_values: true
     required: false
     model: gaming
