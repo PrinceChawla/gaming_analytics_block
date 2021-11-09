@@ -1,7 +1,7 @@
 ##Notes:
 # Session pattern from https://stackoverflow.com/a/55116882/1108832
 datagroup: sessions {
-  sql_trigger: select current_date ;;
+  sql_trigger: select 1 ;;
 }
 view: last {
   derived_table: {

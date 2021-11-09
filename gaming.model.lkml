@@ -4,7 +4,7 @@ include: "/*/*.view.lkml"                       # include all views in this proj
 include: "/lookml_dashboards/*.dashboard.lookml"   # include a LookML dashboard called my_dashboard
 
 # Model Configuration
-datagroup: events_raw { sql_trigger:  SELECT current_date  ;; }
+datagroup: events_raw { sql_trigger:  SELECT 1  ;; }
 named_value_format: large_usd { value_format: "[>=1000000]\"$\"0.00,,\"M\";[>=1000]\"$\"0.00,\"K\";\"$\"0.00" }
 named_value_format: large_number { value_format: "[>=1000000]0.00,,\"M\";[>=1000]0.00,\"K\";0" }
 
