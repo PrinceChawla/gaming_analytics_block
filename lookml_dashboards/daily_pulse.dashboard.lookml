@@ -45,7 +45,7 @@
     series_colors: {}
     series_labels:
       events.number_of_users: Active Users
-      events.number_of_new_users: New Installs
+      events.number_of_new_users: New Users
     show_value_labels: false
     label_density: 25
     x_axis_scale: auto

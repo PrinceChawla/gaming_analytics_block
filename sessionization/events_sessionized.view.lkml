@@ -16,9 +16,9 @@ INNER JOIN ${sessions.SQL_TABLE_NAME} AS sessions
   AND events.@timestamp_field >= sessions.session_start
   AND events.@timestamp_field < sessions.next_session_start
  ;;
-    datagroup_trigger: events_raw
-    partition_keys: ["@timestamp_field"]
-    cluster_keys: ["game_name"]
+    # datagroup_trigger: events_raw
+    # partition_keys: ["@timestamp_field"]
+    # cluster_keys: ["game_name"]
   }
 
 
