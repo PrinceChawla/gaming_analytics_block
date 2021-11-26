@@ -14,6 +14,16 @@ dimension: game_name { type: string sql: ${TABLE}.@{game_name_field} ;; }
 dimension: acquisition_cost { type:number description: "How much did this player cost to acquire?" sql: ${TABLE}.@{acquisition_cost_field} ;;}
 dimension: iap_revenue { type:number description: "Amount of $ paid for this purchase" sql: ${TABLE}.@{iap_revenue_field} ;;}
 dimension: ad_revenue { type:number description: "Amount of $ made by watching an ad" sql: ${TABLE}.@{ad_revenue_field} ;;}
+dimension: user_cohort { type: string sql: ${TABLE}.@{user_cohort} ;;}
+# dimension: campaign_type { type: string sql: ${TABLE}.@{campaign_type};; alias:  [campaign_name]}
+dimension: linear_attr_rev { type: string sql: ${TABLE}.@{linear_attr_rev} ;; }
+dimension: position_attr_rev { type: string sql: ${TABLE}.@{position_attr_rev} ;; }
+dimension: first_click_attr_rev { type:number description: "How much did this player cost to acquire?" sql: ${TABLE}.@{acquisition_cost_field} ;;}
+dimension: last_click_attr_rev { type:number description: "Amount of $ paid for this purchase" sql: ${TABLE}.@{last_click_attr_rev} ;;}
+dimension: timedecay_attr_rev { type:number description: "Amount of $ made by watching an ad" sql: ${TABLE}.@{timedecay_attr_rev} ;;}
+dimension: last_non_direct_click_attr_rev { type:number description: "Amount of $ paid for this purchase" sql: ${TABLE}.@{last_non_direct_click_attr_rev} ;;}
+dimension: channel { type:number description: "Amount of $ made by watching an ad" sql: ${TABLE}.@{channel} ;;}
+
 
 
 
@@ -74,10 +84,10 @@ dimension: drill_field {
   dimension: campaign_type {
     sql:
       case
-       when ${campaign_name} LIKE '%video%' THEN 'video'
-       when ${campaign_name} LIKE '%playable%' THEN 'playable'
-       when ${campaign_name} LIKE '%low%' THEN 'banner - low density'
-       when ${campaign_name} LIKE '%high%' THEN 'banner - high density'
+       when campaign_type LIKE '%video%' THEN 'video'
+       when campaign_type LIKE '%playable%' THEN 'playable'
+       when campaign_type LIKE '%low%' THEN 'banner - low density'
+       when campaign_type LIKE '%high%' THEN 'banner - high density'
        else 'banner - low density'
      END ;;
     drill_fields: [install_source,campaign_name]
@@ -360,7 +370,11 @@ dimension: drill_field {
     {% elsif value > 1.0 %}
     <a style="color: green; font-size:100%" href="#drillmenu" target="_self">{{ rendered_value }}</a>
     {% endif %} ;;
-    drill_fields: [drill_field,total_install_spend,return_on_ad_spend,number_of_paid_users,total_revenue_from_paid_users,cost_per_install]
+    # drill_fields: [drill_field,total_install_spend,return_on_ad_spend,number_of_paid_users,total_revenue_from_paid_users,cost_per_install]
+    link: {
+      label: "see ROAS"
+      url: "https://mediaagility.looker.com/dashboards-next/246"
+      }
   }
 
 # Monetization

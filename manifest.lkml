@@ -1,6 +1,6 @@
 ## What table houses your events?
 constant: events_table {
-  value: "`mlconsole-poc.gaming_demo_dev.raw_events`"
+  value: "`mlconsole-poc.gaming_demo_dev.events_data_src`"
 }
 ## When did the event occour?
 constant: timestamp_field {
@@ -9,7 +9,7 @@ constant: timestamp_field {
 
 ## What country was the event fired from?
 constant: country_field {
-  value: "country"
+  value: "Country"
 }
 
 ## is as the device's platform?
@@ -29,7 +29,7 @@ constant: game_name_field {
 
 ## What is the user/player ID field?
 constant: user_id_field {
-  value: "user_id"
+  value: "userid"
 }
 
 ## What is name of the event field (i.e. start_match)?
@@ -45,11 +45,38 @@ constant: acquisition_cost_field {
 
 ## What is name of the ad revenue field?
 constant: ad_revenue_field {
-  value: "ad_revenue"
+  value: "Ad_cost"
 }
 
 
 ## What is name of the event field (i.e. start_match)?
 constant: iap_revenue_field {
-  value: "iap_revenue"
+  value: "first_purchase"
+}
+constant: user_cohort {
+  value: "User_Cohort"
+}
+constant: campaign_type {
+  value: "Campaign_type"
+}
+constant: linear_attr_rev {
+  value: "linear_attr_rev"
+}
+constant: position_attr_rev {
+  value: "position_attr_rev"
+}
+constant: first_click_attr_rev {
+  value: "first_click_attr_rev"
+}
+constant: last_click_attr_rev {
+  value: "last_click_attr_rev"
+}
+constant: timedecay_attr_rev {
+  value: "timedecay_attr_rev"
+}
+constant: last_non_direct_click_attr_rev {
+  value: "last_non_direct_click_attr_rev"
+}
+constant: channel {
+  value: "channel"
 }

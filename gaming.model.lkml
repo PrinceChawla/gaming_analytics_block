@@ -62,3 +62,4 @@ explore: sessions {
     sql_on: ${sessions.user_id} = ${user_facts.user_id} ;;
   }
 }
+explore: events_data_src {}
