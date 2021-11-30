@@ -16,13 +16,13 @@ dimension: iap_revenue { type:number description: "Amount of $ paid for this pur
 dimension: ad_revenue { type:number description: "Amount of $ made by watching an ad" sql: ${TABLE}.@{ad_revenue_field} ;;}
 dimension: user_cohort { type: string sql: ${TABLE}.@{user_cohort} ;;}
 # dimension: campaign_type { type: string sql: ${TABLE}.@{campaign_type};; alias:  [campaign_name]}
-dimension: linear_attr_rev { type: string sql: ${TABLE}.@{linear_attr_rev} ;; }
-dimension: position_attr_rev { type: string sql: ${TABLE}.@{position_attr_rev} ;; }
-dimension: first_click_attr_rev { type:number description: "How much did this player cost to acquire?" sql: ${TABLE}.@{acquisition_cost_field} ;;}
-dimension: last_click_attr_rev { type:number description: "Amount of $ paid for this purchase" sql: ${TABLE}.@{last_click_attr_rev} ;;}
-dimension: timedecay_attr_rev { type:number description: "Amount of $ made by watching an ad" sql: ${TABLE}.@{timedecay_attr_rev} ;;}
-dimension: last_non_direct_click_attr_rev { type:number description: "Amount of $ paid for this purchase" sql: ${TABLE}.@{last_non_direct_click_attr_rev} ;;}
-dimension: channel { type:number description: "Amount of $ made by watching an ad" sql: ${TABLE}.@{channel} ;;}
+dimension: linear_attr_rev { type: number sql: ${TABLE}.@{linear_attr_rev} ;; }
+dimension: position_attr_rev { type: number sql: ${TABLE}.@{position_attr_rev} ;; }
+dimension: first_click_attr_rev { type:number  sql: ${TABLE}.@{acquisition_cost_field} ;;}
+dimension: last_click_attr_rev { type:number  sql: ${TABLE}.@{last_click_attr_rev} ;;}
+dimension: timedecay_attr_rev { type:number  sql: ${TABLE}.@{timedecay_attr_rev} ;;}
+dimension: last_non_direct_click_attr_rev { type:number  sql: ${TABLE}.@{last_non_direct_click_attr_rev} ;;}
+dimension: channel { type:string sql: ${TABLE}.@{channel} ;;}
 
 
 
@@ -37,6 +37,35 @@ parameter: drill_by {
   allowed_value: { label: "Game Version" value: "game_version" }
   allowed_value: { label: "Install Source" value: "install_source" }
 }
+
+  parameter: attrbution_model {
+    type: string
+    allowed_value: {
+      label: "Last Interaction"
+      value: "last_click_attr_rev"
+    }
+    allowed_value: {
+      label: "Last Non-Direct Click"
+      value: "last_non_direct_click_attr_rev"
+    }
+    allowed_value: {
+      label: "First Interaction"
+      value: "first_click_attr_rev"
+    }
+    allowed_value: {
+      label: "Linear"
+      value: "linear_attr_rev"
+    }
+    allowed_value: {
+      label: "Time Decay"
+      value: "timedecay_attr_rev"
+    }
+    allowed_value: {
+      label: "Position Based"
+      value: "position_attr_rev"
+    }
+  }
+
 
 dimension: drill_field {
   hidden: yes
@@ -370,11 +399,27 @@ dimension: drill_field {
     {% elsif value > 1.0 %}
     <a style="color: green; font-size:100%" href="#drillmenu" target="_self">{{ rendered_value }}</a>
     {% endif %} ;;
-    # drill_fields: [drill_field,total_install_spend,return_on_ad_spend,number_of_paid_users,total_revenue_from_paid_users,cost_per_install]
-    link: {
-      label: "see ROAS"
-      url: "https://mediaagility.looker.com/dashboards-next/246"
-      }
+    drill_fields: [drill_field,total_install_spend,return_on_ad_spend,number_of_paid_users,total_revenue_from_paid_users,cost_per_install]
+    # link: {
+    #   label: "see ROAS"
+    #   url: "https://mediaagility.looker.com/dashboards-next/246"
+    #   }
+  }
+
+  measure: attr_return_on_ad_spend {
+    group_label: "User Acquistion"
+    label: "attr_ROAS"
+    # description: "Revenue (from paid users) / Cost (to acquire those users) "
+    type: number
+    sql: 1.0 * ${attr_total_revenue} / NULLIF(${total_install_spend},0) ;;
+    value_format_name: percent_2
+    html:
+    {% if value <= 1.0 %}
+    <a style="color: red; font-size:100%" href="#drillmenu" target="_self">{{ rendered_value }}</a>
+    {% elsif value > 1.0 %}
+    <a style="color: green; font-size:100%" href="#drillmenu" target="_self">{{ rendered_value }}</a>
+    {% endif %} ;;
+    drill_fields: [drill_field,total_install_spend,return_on_ad_spend,number_of_paid_users,total_revenue_from_paid_users,cost_per_install]
   }
 
 # Monetization
@@ -454,6 +499,21 @@ measure: total_iap_revenue {
     sql: ${combined_revenue} ;;
     value_format_name: large_usd
     drill_fields: [drill_field,total_revenue]
+  }
+
+  measure: attr_total_revenue {
+    group_label: "Monetization"
+    description: "attribution model revenue"
+    # label_from_parameter: attrbution_model
+    type: sum
+    value_format_name: large_usd
+    sql: case when {% parameter attrbution_model %} = "last_click_attr_rev" then ${last_click_attr_rev}
+         when {% parameter attrbution_model %} = "linear_attr_rev" then ${linear_attr_rev}
+        when {% parameter attrbution_model %} = "first_click_attr_rev" then ${first_click_attr_rev}
+        when {% parameter attrbution_model %} = "timedecay_attr_rev" then ${timedecay_attr_rev}
+        when {% parameter attrbution_model %} = "last_non_direct_click_attr_rev" then ${last_non_direct_click_attr_rev}
+        when {% parameter attrbution_model %} = "position_attr_rev" then ${position_attr_rev}
+       End;;
   }
 
   measure: total_revenue_after_UA {
