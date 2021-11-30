@@ -23,9 +23,9 @@ dimension: last_click_attr_rev { type:number  sql: ${TABLE}.@{last_click_attr_re
 dimension: timedecay_attr_rev { type:number  sql: ${TABLE}.@{timedecay_attr_rev} ;;}
 dimension: last_non_direct_click_attr_rev { type:number  sql: ${TABLE}.@{last_non_direct_click_attr_rev} ;;}
 dimension: channel { type:string sql: ${TABLE}.@{channel} ;;}
-
-
-
+dimension: avg_predicted_value { type: number sql: ${TABLE}.@{avg_predicted_value} ;;}
+measure: clv { type:sum  sql: ${TABLE}.@{clv} ;; value_format_name: large_usd}
+  measure: total_avg_predicted_value { type:sum  sql: ${TABLE}.@{avg_predicted_value} /1000000;; value_format_name: large_usd}
 
 # Drill Selector
 parameter: drill_by {
@@ -142,6 +142,13 @@ dimension: drill_field {
     value_format_name: large_number
     drill_fields: [drill_field,number_of_users]
   }
+
+  # measure: clv {
+  #   type: sum
+  #   sql: ${clv};;
+  #   value_format_name: large_number
+  #   # drill_fields: [drill_field,number_of_users]
+  # }
 
   measure: number_of_new_users {
     group_label: "User Counts"
@@ -391,7 +398,8 @@ dimension: drill_field {
     label: "ROAS"
     description: "Revenue (from paid users) / Cost (to acquire those users) "
     type: number
-    sql: 1.0 * ${total_revenue_from_paid_users} / NULLIF(${total_install_spend},0) ;;
+    # sql: 1.0 * ${total_revenue_from_paid_users} / NULLIF(${total_install_spend},0) ;;
+    sql: 1.0 * ${clv} / NULLIF(${total_ad_revenue},1) ;;
     value_format_name: percent_2
     html:
     {% if value <= 1.0 %}
@@ -411,7 +419,7 @@ dimension: drill_field {
     label: "attr_ROAS"
     # description: "Revenue (from paid users) / Cost (to acquire those users) "
     type: number
-    sql: 1.0 * ${attr_total_revenue} / NULLIF(${total_install_spend},0) ;;
+    sql: 1.0 * ${attr_total_revenue} / NULLIF(${total_ad_revenue},0) ;;
     value_format_name: percent_2
     html:
     {% if value <= 1.0 %}
@@ -574,7 +582,8 @@ measure: total_iap_revenue {
     label: "ARPPU (IAP)"
     description: " Total Revenue / Number of IAP Paying Users"
     type: number
-    sql: 1.0 * ${total_iap_revenue} / NULLIF(${number_of_spenders},0) ;;
+    # sql: 1.0 * ${total_iap_revenue} / NULLIF(${number_of_spenders},0) ;;
+    sql: 1.0 * ${clv} / NULLIF(${number_of_users},0) ;;
     value_format_name: large_usd
     drill_fields: [drill_field,average_revenue_per_spender]
   }

@@ -80,3 +80,10 @@ constant: last_non_direct_click_attr_rev {
 constant: channel {
   value: "channel"
 }
+
+constant: clv {
+  value: "clv"
+}
+constant: avg_predicted_value {
+  value: "Avg_Predicted_Value"
+}
