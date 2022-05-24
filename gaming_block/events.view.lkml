@@ -401,12 +401,12 @@ dimension: drill_field {
     # sql: 1.0 * ${total_revenue_from_paid_users} / NULLIF(${total_install_spend},0) ;;
     sql: 1.0 * ${clv} / NULLIF(${total_ad_revenue},1) ;;
     value_format_name: percent_2
-    html:
-    {% if value <= 1.0 %}
-    <a style="color: red; font-size:100%" href="#drillmenu" target="_self">{{ rendered_value }}</a>
-    {% elsif value > 1.0 %}
-    <a style="color: green; font-size:100%" href="#drillmenu" target="_self">{{ rendered_value }}</a>
-    {% endif %} ;;
+    # html:
+    # {% if value <= 1.0 %}
+    # <a style="color: red; font-size:100%" href="#drillmenu" target="_self">{{ rendered_value }}</a>
+    # {% elsif value > 1.0 %}
+    # <a style="color: green; font-size:100%" href="#drillmenu" target="_self">{{ rendered_value }}</a>
+    # {% endif %} ;;
     drill_fields: [drill_field,total_install_spend,return_on_ad_spend,number_of_paid_users,total_revenue_from_paid_users,cost_per_install]
     # link: {
     #   label: "see ROAS"
