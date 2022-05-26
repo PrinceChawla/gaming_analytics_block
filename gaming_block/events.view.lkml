@@ -330,8 +330,8 @@ dimension: drill_field {
   measure: d14_retention_rate {
     group_label: "Retention"
     description: "% of players (that are older than 14 days) that came back to play on day 14"
-    value_format_name: percent_2
-    type: number
+ value_format_name: percent_0
+  type: number
     sql: 1.0 * ${d14_retained_users}/ NULLIF(${d14_eligible_users},0);;
     drill_fields: [drill_field,d14_retention_rate]
   }
