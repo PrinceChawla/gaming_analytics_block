@@ -400,7 +400,7 @@ dimension: drill_field {
     type: number
     # sql: 1.0 * ${total_revenue_from_paid_users} / NULLIF(${total_install_spend},0) ;;
     sql: 1.0 * ${clv} / NULLIF(${total_ad_revenue},1) ;;
-    value_format_name: percent_2
+    value_format_name: decimal_2
     # html:
     # {% if value <= 1.0 %}
     # <a style="color: red; font-size:100%" href="#drillmenu" target="_self">{{ rendered_value }}</a>
